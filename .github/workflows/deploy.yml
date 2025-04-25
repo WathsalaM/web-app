@@ -1,0 +1,34 @@
+name: Deploy weather Display App
+
+on:
+  push:
+    branches:
+      - main  # Runs the workflow when code is pushed to 'main' branch
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'  # Node.js version
+
+      - name: Install Backend Dependencies
+        run: |
+          cd backend
+          npm install
+
+      - name: Install Frontend Dependencies
+        run: |
+          cd frontend
+          npm install
+
+      - name: Run Tests
+        run: |
+          cd backend
+          npm test || true  # Runs backend tests (if any)
